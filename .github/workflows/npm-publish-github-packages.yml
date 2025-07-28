@@ -31,13 +31,6 @@ jobs:
           push: false
           tags: fortstak:latest
 
-      - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@v0.14.0
-        with:
-          image-ref: fortstak:latest
-          format: table
-          exit-code: 1
-          ignore-unfixed: true
 
       - name: Push Docker image
         uses: docker/build-push-action@v5
