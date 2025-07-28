@@ -1,0 +1,19 @@
+FROM node:alpine
+
+WORKDIR /usr/src/app
+
+
+RUN addgroup -S nodejs && adduser -S nodejs -G nodejs
+
+COPY package*.json ./
+
+RUN npm install
+COPY . .
+
+RUN chown -R nodejs:nodejs /usr/src/app
+
+USER nodejs
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
