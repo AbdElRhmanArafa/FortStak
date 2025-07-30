@@ -1,0 +1,6 @@
+master1: 192.168.121.40
+worker1: 192.168.121.164
+
+Master Nodes: 1
+Worker Nodes: 1
+HA Proxy: 0
