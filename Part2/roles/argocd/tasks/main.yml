@@ -1,0 +1,47 @@
+---
+- name: Create argocd namespace
+  kubernetes.core.k8s:
+    state: present
+    api_version: v1
+    kind: Namespace
+    name: argocd
+    kubeconfig: "{{ playbook_dir }}/../Part2/config"
+    delegate_to: localhost
+
+- name: Download ArgoCD manifest
+  get_url:
+    url: https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    dest: /tmp/argocd-install.yaml
+    mode: '0644'
+    delegate_to: localhost
+
+
+- name: Install ArgoCD
+  kubernetes.core.k8s:
+    state: present
+    src: /tmp/argocd-install.yaml
+    kubeconfig: "{{ playbook_dir }}/../Part2/config"
+    delegate_to: localhost
+
+
+- name: Wait for ArgoCD deployments to be ready
+  kubernetes.core.k8s_info:
+    kind: Deployment
+    namespace: argocd
+    wait: yes
+    wait_timeout: 300
+    wait_condition:
+      type: Available
+      status: "True"
+    kubeconfig: "{{ playbook_dir }}/../Part2/config"
+    delegate_to: localhost
+
+
+- name: Copy ArgoCD application manifest
+  copy:
+    src: "{{ playbook_dir }}/../Part3/argocd/application.yml"
+    dest: /tmp/argocd-application.yml
+    mode: '0644'
+    delegate_to: localhost
+
+  

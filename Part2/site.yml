@@ -3,3 +3,8 @@
   hosts: all
   roles:
     - kubernetes_cluster
+
+- name: Install and Configure ArgoCD
+  hosts: master
+  roles:
+    - argocd

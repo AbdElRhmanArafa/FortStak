@@ -1,5 +1,5 @@
-master1: 192.168.121.40
-worker1: 192.168.121.164
+master1: 192.168.121.228
+worker1: 192.168.121.27
 
 Master Nodes: 1
 Worker Nodes: 1
